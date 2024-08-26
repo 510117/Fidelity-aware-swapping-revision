@@ -65,7 +65,7 @@ int main(){
     map<string, double> default_setting;
     default_setting["num_nodes"] = 100;
     default_setting["request_cnt"] = 50;
-    default_setting["entangle_lambda"] = 0.0005;
+    default_setting["entangle_lambda"] = 0.045;
     default_setting["time_limit"] = 13;
     default_setting["avg_memory"] = 10;
     default_setting["tao"] = 0.5;
@@ -115,9 +115,10 @@ int main(){
     change_parameter["swap_prob"] = {0.5, 0.6, 0.7, 0.8, 0.9};
     change_parameter["fidelity_threshold"] = {0.4, 0.45, 0.5, 0.55, 0.6};
     change_parameter["time_limit"] = {5, 9, 13, 17, 21};
+    change_parameter["entangle_lambda"] = {0.015, 0.025, 0.035, 0.045, 0.055, 0.065};
 
     // vector<string> X_names = {"time_limit", "request_cnt", "num_nodes", "avg_memory", "tao"};
-    vector<string> X_names = {"request_cnt", "time_limit", "tao", "fidelity_threshold", "avg_memory", "min_fidelity"};
+    vector<string> X_names = {"request_cnt", "time_limit", "tao", "fidelity_threshold", "avg_memory", "min_fidelity", "entangle_lambda"};
     vector<string> Y_names = {"fidelity_gain", "succ_request_cnt"};
     vector<string> algo_names = {"MyAlgo1", "MyAlgo2", "MyAlgo3", "Merge", "Linear"};
     // init result
