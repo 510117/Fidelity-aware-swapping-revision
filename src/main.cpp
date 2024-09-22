@@ -101,7 +101,7 @@ int main(){
             cerr<<"error:\tsystem proccess python error"<<endl;
             exit(1);
         }
-        Graph graph(filename, time_limit, swap_prob, avg_memory, min_fidelity, max_fidelity, fidelity_threshold, A, B, n, T, tao, entangle_time);
+        Graph graph(filename, time_limit, swap_prob, avg_memory, min_fidelity, max_fidelity, fidelity_threshold, A, B, n, T, tao);
         default_requests[r] = generate_requests(graph, 100, length_lower, length_upper);
     }
 

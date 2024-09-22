@@ -46,7 +46,7 @@ def link_prob(entangle_lambda, dis, times):
     one_prob = math.exp(-entangle_lambda * dis)
     return 1 - ((1 - one_prob) ** times)
 
-if len(sys.argv) != 5:
+if len(sys.argv) <= 5:
     print("missing argv")
     sys.exit()
 
@@ -57,8 +57,8 @@ num_of_node = int(sys.argv[2])
 # min_fidelity = float(sys.argv[5])
 # max_fidelity = float(sys.argv[6])
 entangle_lambda = float(sys.argv[3])
-tao = float(sys.argc[4])
-entangle_time = float(sys.argc[5])
+tao = float(sys.argv[4])
+entangle_time = float(sys.argv[5])
 
 print("======== generating graph ========", file=sys.stderr)
 print("======== generating graph ========\n")
@@ -135,7 +135,7 @@ with open(path, 'w') as f:
 
 print("num_of_edge =", num_of_edge, file=sys.stderr)
 print("avg_edge_len =", avg_l, file=sys.stderr)
-print("avg_ent_prob =", link_prob(entangle_lambda, avg_l), file=sys.stderr)
+print("avg_ent_prob =", link_prob(entangle_lambda, avg_l, tao // entangle_time), file=sys.stderr)
 print("\n======== graph generate finished ! ========", file=sys.stderr)
 print("======== graph generate finished ! ========")
 
