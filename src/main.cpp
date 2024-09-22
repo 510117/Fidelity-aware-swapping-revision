@@ -68,7 +68,7 @@ int main(){
     default_setting["entangle_lambda"] = 0.045;
     default_setting["time_limit"] = 13;
     default_setting["avg_memory"] = 10;
-    default_setting["tao"] = 0.5;
+    default_setting["tao"] = 0.002;
     default_setting["path_length"] = 7;
     default_setting["min_fidelity"] = 0.7;
     default_setting["max_fidelity"] = 0.98;
@@ -94,13 +94,14 @@ int main(){
 
         string filename = file_path + "input/round_" + to_string(r) + ".input";
         string command = "python3 graph_generator.py ";
-        string parameter = to_string(num_nodes) + " " + to_string(entangle_lambda);
         double A = 0.25, B = 0.75, tao = default_setting["tao"], T = 10, n = 2;
+        double entangle_time = 0.0002;
+        string parameter = to_string(num_nodes) + " " + to_string(entangle_lambda) + " " + to_string(tao) + " " + to_string(entangle_time);
         if(system((command + filename + " " + parameter).c_str()) != 0){
             cerr<<"error:\tsystem proccess python error"<<endl;
             exit(1);
         }
-        Graph graph(filename, time_limit, swap_prob, avg_memory, min_fidelity, max_fidelity, fidelity_threshold, A, B, n, T, tao);
+        Graph graph(filename, time_limit, swap_prob, avg_memory, min_fidelity, max_fidelity, fidelity_threshold, A, B, n, T, tao, entangle_time);
         default_requests[r] = generate_requests(graph, 100, length_lower, length_upper);
     }
 
@@ -110,12 +111,13 @@ int main(){
     change_parameter["num_nodes"] = {40, 70, 100, 130, 160};
     change_parameter["min_fidelity"] = {0.6, 0.7, 0.8, 0.9, 0.95};
     change_parameter["avg_memory"] = {6, 8, 10, 12, 14};
-    change_parameter["tao"] = {0.3, 0.4, 0.5, 0.6, 0.7};
+    // change_parameter["tao"] = {0.3, 0.4, 0.5, 0.6, 0.7};
+    change_parameter["tao"] = {0.001, 0.0015, 0.002, 0.0025, 0.003};
     change_parameter["path_length"] = {3, 6, 9, 12, 15};
     change_parameter["swap_prob"] = {0.5, 0.6, 0.7, 0.8, 0.9};
     change_parameter["fidelity_threshold"] = {0.4, 0.45, 0.5, 0.55, 0.6};
     change_parameter["time_limit"] = {5, 9, 13, 17, 21};
-    change_parameter["entangle_lambda"] = {0.015, 0.025, 0.035, 0.045, 0.055, 0.065};
+    change_parameter["entangle_lambda"] = {0.025, 0.035, 0.045, 0.055, 0.065};
 
     // vector<string> X_names = {"time_limit", "request_cnt", "num_nodes", "avg_memory", "tao"};
     vector<string> X_names = {"request_cnt", "time_limit", "tao", "fidelity_threshold", "avg_memory", "min_fidelity", "entangle_lambda"};
@@ -177,7 +179,7 @@ int main(){
 
 
 
-                    double A = 0.25, B = 0.75, tao = input_parameter["tao"], T = 10, n = 2;
+                    double A = 0.25, B = 0.75, tao = input_parameter["tao"], T = 0.04, n = 2;
 
                     Graph graph(filename, time_limit, swap_prob, avg_memory, min_fidelity, max_fidelity, fidelity_threshold, A, B, n, T, tao);
 

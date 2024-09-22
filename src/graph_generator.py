@@ -40,12 +40,13 @@ def is_connect():
 def dist(p1, p2):
     (x1, y1) = p1
     (x2, y2) = p2
-    return ((x1-x2)**2 + (y1-y2)**2)**(1/2)
+    return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1 / 2)
 
-def prob(a, l):
-    return math.exp(-a*l)
+def link_prob(entangle_lambda, dis, times):
+    one_prob = math.exp(-entangle_lambda * dis)
+    return 1 - ((1 - one_prob) ** times)
 
-if len(sys.argv) <= 3:
+if len(sys.argv) != 5:
     print("missing argv")
     sys.exit()
 
@@ -56,6 +57,8 @@ num_of_node = int(sys.argv[2])
 # min_fidelity = float(sys.argv[5])
 # max_fidelity = float(sys.argv[6])
 entangle_lambda = float(sys.argv[3])
+tao = float(sys.argc[4])
+entangle_time = float(sys.argc[5])
 
 print("======== generating graph ========", file=sys.stderr)
 print("======== generating graph ========\n")
@@ -115,7 +118,7 @@ with open(path, 'w') as f:
         if e[0] != e[1]:
             e0 = str(e[0])
             e1 = str(e[1])
-            dis = RANGE*dist(positions[e[0]], positions[e[1]])  # distance
+            dis = RANGE * dist(positions[e[0]], positions[e[1]])  # distance
             # F = random.random()*(max_fidelity-min_fidelity) + min_fidelity  # fidelity
             ratio = numpy.random.normal(1, 0.15)
             dif = abs(1 - ratio)
@@ -125,14 +128,14 @@ with open(path, 'w') as f:
             if ratio < 0:
                 ratio = 0
             F = ratio
-            prob_e = prob(entangle_lambda, dis)   # entangled probability
+            prob_e = link_prob(entangle_lambda, dis, tao // entangle_time)   # entangled probability
             print(e0 + " " + e1 + " " + str(F) + " " + str(prob_e), file=f)
             avg_l += dis
     avg_l /= num_of_edge
 
 print("num_of_edge =", num_of_edge, file=sys.stderr)
 print("avg_edge_len =", avg_l, file=sys.stderr)
-print("avg_ent_prob =", prob(entangle_lambda, avg_l), file=sys.stderr)
+print("avg_ent_prob =", link_prob(entangle_lambda, avg_l), file=sys.stderr)
 print("\n======== graph generate finished ! ========", file=sys.stderr)
 print("======== graph generate finished ! ========")
 
