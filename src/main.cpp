@@ -256,6 +256,7 @@ int main(){
                     }
 
 
+
                     for(int i = 0; i < (int)algorithms.size(); i++) {
                         for(string Y_name : Y_names) {
                             result[r][algorithms[i]->get_name()][Y_name] = algorithms[i]->get_res(Y_name);
